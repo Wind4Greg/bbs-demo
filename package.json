@@ -1,0 +1,22 @@
+{
+  "name": "bbs-demo",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@noble/bls12-381": "^1.4.0",
+    "@noble/hashes": "^1.1.5",
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.3",
+    "vue": "^3.2.45"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "sass": "^1.57.1",
+    "vite": "^4.0.0"
+  }
+}
