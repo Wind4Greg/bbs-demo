@@ -56,14 +56,6 @@ function copySig() {
 
         <div class="card-body">
             <form>
-                <!-- <div class="mb-3">
-                    <label for="secretKey" class="form-label">Secret Key Scalar</label>
-                    <input type="text" class="form-control" id="secretKey" :placeholder="props.keys.secretScalar">
-                </div>
-                <div class="mb-3">
-                    <label for="publicKey" class="form-label">Public Key</label>
-                    <input type="text" class="form-control" id="publicKey" :placeholder="bytesToHex(props.keys.publicBytes)">
-                </div> -->
                 <div class="mb-3">
                     <label for="sigHeader" class="form-label">Signature Header Hex</label>
                     <input type="text" class="form-control" id="sigHeader" v-model="header">
