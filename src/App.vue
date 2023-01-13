@@ -2,6 +2,7 @@
 import {ref} from "vue";
 import KeyGeneration from './components/KeyGeneration.vue';
 import MsgSign from './components/MsgSign.vue';
+import MsgVerify from "./components/MsgVerify.vue";
 
 let keys = ref({});
 
@@ -16,6 +17,7 @@ function keyUpdate(keyInfo) {
     <h1>BBS Signature Demo</h1>
     <KeyGeneration @keys="keyUpdate"/>
     <MsgSign :keys="keys"/>
+    <MsgVerify />
   </main>
 </template>
 

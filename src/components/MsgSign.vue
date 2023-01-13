@@ -5,10 +5,10 @@ import * as bls from '@noble/bls12-381';
 
 const props = defineProps(['keys'])
 
-// TODO: export JSON string with relevant data and signature
 let messages = ref(["University of Nowhere Fall 2020", "Physics 137A: A", "Guitar 101: B", "Dance Elementary: D"]);
 let header = ref("11223344556677889900aabbccddeeff");
 let signature = ref("");
+let signatureBundle = ref({});
 
 
 
@@ -32,11 +32,19 @@ async function createSig() {
         let result = await sign(props.keys.secretScalar, props.keys.publicBytes, headerBytes,
             msg_scalars, gens);
         signature.value = bytesToHex(result);
+        signatureBundle.value = { publicKey: bytesToHex(props.keys.publicBytes),
+            header: header.value,
+            messages: messages.value,
+            signature: signature.value
+        }
         console.log(`Finished signature computation: ${signature.value}`);
     } catch (error) {
         console.log(`Problem with signature ${error}`);
     }
+}
 
+function copySig() {
+    navigator.clipboard.writeText(JSON.stringify(signatureBundle.value, null, 2))
 }
 </script>
 
@@ -74,6 +82,9 @@ async function createSig() {
             <div>
                 <h3>Signature</h3>
                 <p>{{ signature }}</p>
+                <h4>Signature Bundle <button type="button" class="btn btn-small" @click="copySig">Copy</button></h4>
+                <div>{{ JSON.stringify(signatureBundle, null, 2) }}</div>
+
             </div>
 
         </div>
