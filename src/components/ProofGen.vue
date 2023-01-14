@@ -1,13 +1,15 @@
 <script setup>
-import { ref } from 'vue';
-import { verify, messages_to_scalars, prepareGenerators, os2ip, hexToBytes, bytesToHex } from './BBSAllinOne.js';
+import { ref} from 'vue';
+import { proofGen, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from './BBSAllinOne.js';
 
 let sigBundleString = ref("");
 let sigBundle = ref({});
-let verifiedText = ref("?");
+let disclosed = ref([]);
+let proofBundleText = ref("");
 
-async function verifySig() {
-    console.log("Verify signature called");
+
+async function genProof() {
+    console.log("Generate Proof called");
     try {
         // Need to convert messages to octets!
         let te = new TextEncoder();
@@ -18,17 +20,28 @@ async function verifySig() {
         let headerBytes = hexToBytes(sigBundle.value.header);
         let pk_bytes = hexToBytes(sigBundle.value.publicKey);
         let signature = hexToBytes(sigBundle.value.signature);
-        let verified = await verify(pk_bytes, signature, headerBytes, msg_scalars, gens);
-        verifiedText.value = verified.toString();
+        let ph = new Uint8Array(); // Empty proof header for now
+        let result = await proofGen(pk_bytes, signature, headerBytes, ph, msg_scalars, disclosed.value, gens);
+        let disclosedMsgs = messages.filter((msg, i) => disclosed.value.includes(i));
+        let proofBundle = {
+            pk: bytesToHex(pk_bytes),
+            header: bytesToHex(headerBytes),
+            ph: bytesToHex(ph),
+            disclosedIndexes: disclosed.value,
+            disclosedMsgs: disclosedMsgs,
+            totalMsgs: messages.length,
+            proof: bytesToHex(result)
+        }
+        proofBundleText.value = JSON.stringify(proofBundle, null, 2);
+
     } catch (error) {
         console.log(`Problem with signature ${error}`);
     }
 }
 
-function processBundleText() {
+function processSigBundleText() {
     try {
         sigBundle.value = JSON.parse(sigBundleString.value);
-        verifiedText.value = "?";
     } catch {
         console.log("Bad signature bundle string")
         sigBundle.value = {};
@@ -37,12 +50,21 @@ function processBundleText() {
 
 function addMessage() {
     sigBundle.value.messages.push("");
-    verifiedText.value = "?";
 }
 
-function removeMessage(i) {
-    sigBundle.value.messages.splice(i, 1);
-    verifiedText.value = "?";
+function disclosedCheck(i) { // Keeps track of disclosed indices
+    // console.log(`Disclosed check: i = ${i}`);
+    let index = disclosed.value.indexOf(i);
+    if (index == -1) { // Add to disclosed indexes
+        disclosed.value.push(i);
+        disclosed.value.sort();
+    } else { // Remove from disclosed indices
+        disclosed.value.splice(index, 1);
+    }
+}
+
+function copyProof() {
+    navigator.clipboard.writeText(proofBundleText.value);
 }
 
 </script>
@@ -50,7 +72,7 @@ function removeMessage(i) {
 <template>
     <div class="card">
         <div class="card-header">
-            Message Verification
+            Proof Generation
         </div>
 
         <div class="card-body">
@@ -58,7 +80,7 @@ function removeMessage(i) {
                 <div class="mb-3">
                     <label for="sigBundleText" class="form-label">Signature Bundle JSON</label>
                     <textarea class="form-control" v-model="sigBundleString" id="sigBundleText" rows="3"></textarea>
-                    <button type="button" class="btn btn-primary" @click="processBundleText">Process JSON</button>
+                    <button type="button" class="btn btn-primary" @click="processSigBundleText">Process JSON</button>
                 </div>
             </form>
             <form class="mb-3">
@@ -70,15 +92,19 @@ function removeMessage(i) {
                     <legend>Messages:</legend>
                     <div v-for="(msg, index) in sigBundle.messages" class="mb-3 input-group">
                         <input type="text" class="form-control" :placeholder="msg" v-model="sigBundle.messages[index]">
-                        <button class="btn btn-outline-secondary" @click="removeMessage(index)"
-                            type="button">Remove</button>
+                        <span class="input-group-text">
+                            <input class="form-check-input" type="checkbox" @change="disclosedCheck(index)">
+                        </span>
                     </div>
                     <button type="button" class="btn btn-primary" @click="addMessage">Add Message</button>
                 </fieldset>
             </form>
-            <div id="VerifySection">
-                <button type="button" class="btn btn-secondary" @click="verifySig">Verify Signature</button>
-                <h3>Verified: {{ verifiedText }}</h3>
+            <div id="ProofSection">
+                <button type="button" class="btn btn-secondary" @click="genProof">Generate Proof</button>
+                <h3>Proof <button type="button" class="btn btn-small" @click="copyProof">Copy to Clipboard</button></h3>
+                <div class="mb-3">
+                    <textarea class="form-control" v-model="proofBundleText" readonly rows="3"></textarea>
+                </div>
             </div>
 
 
@@ -87,6 +113,4 @@ function removeMessage(i) {
     </div>
 </template>
 <style scoped>
-    #VerifySection {display: flex}
-    #VerifySection button {margin-right: 1em}
 </style>

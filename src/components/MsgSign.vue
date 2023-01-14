@@ -1,7 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue';
-import { sign, verify, messages_to_scalars, prepareGenerators, os2ip, hexToBytes, bytesToHex } from './BBSAllinOne.js';
-import * as bls from '@noble/bls12-381';
+import { ref} from 'vue';
+import { sign, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from './BBSAllinOne.js';
 
 const props = defineProps(['keys'])
 
@@ -74,7 +73,7 @@ function copySig() {
             <div>
                 <h3>Signature</h3>
                 <p>{{ signature }}</p>
-                <h4>Signature Bundle <button type="button" class="btn btn-small" @click="copySig">Copy</button></h4>
+                <h4>Signature Bundle <button type="button" class="btn btn-small" @click="copySig">Copy to Clipboard</button></h4>
                 <div>{{ JSON.stringify(signatureBundle, null, 2) }}</div>
 
             </div>
