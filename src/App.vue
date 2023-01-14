@@ -4,6 +4,7 @@ import KeyGeneration from './components/KeyGeneration.vue';
 import MsgSign from './components/MsgSign.vue';
 import MsgVerify from "./components/MsgVerify.vue";
 import ProofGen from "./components/ProofGen.vue";
+import ProofVerify from "./components/ProofVerify.vue";
 
 let keys = ref({});
 
@@ -20,6 +21,7 @@ function keyUpdate(keyInfo) {
     <MsgSign :keys="keys"/>
     <MsgVerify />
     <ProofGen />
+    <ProofVerify />
   </main>
 </template>
 
