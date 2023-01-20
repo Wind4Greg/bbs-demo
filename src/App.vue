@@ -7,21 +7,31 @@ import ProofGen from "./components/ProofGen.vue";
 import ProofVerify from "./components/ProofVerify.vue";
 
 let keys = ref({});
+let sigBundle = ref("");
+let proofBundleText = ref("");
 
 function keyUpdate(keyInfo) {
-  console.log(keyInfo);
   keys.value = keyInfo;
 }
+
+function sigUpdate(sigText) {
+  sigBundle.value = sigText;
+}
+
+function proofUpdate(proofText) {
+  proofBundleText.value = proofText;
+}
+
 </script>
 
 <template>
   <main>
     <h1>BBS Signature Demo</h1>
     <KeyGeneration @keys="keyUpdate"/>
-    <MsgSign :keys="keys"/>
-    <MsgVerify />
-    <ProofGen />
-    <ProofVerify />
+    <MsgSign :keys="keys" @signature="sigUpdate"/>
+    <MsgVerify :sigBundle="sigBundle"/>
+    <ProofGen :sigBundle="sigBundle" @proof="proofUpdate" />
+    <ProofVerify :proofBundleString="proofBundleText" />
   </main>
 </template>
 

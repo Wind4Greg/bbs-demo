@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import { verify, messages_to_scalars, prepareGenerators, os2ip, hexToBytes, bytesToHex } from './BBSAllinOne.js';
 
+const props = defineProps(['sigBundle']);
+
 let sigBundleString = ref("");
 let sigBundle = ref({});
 let verifiedText = ref("?");
@@ -45,6 +47,11 @@ function removeMessage(i) {
     verifiedText.value = "?";
 }
 
+function useLocalSig() {
+    sigBundleString.value = props.sigBundle;
+    processBundleText();
+}
+
 </script>
 
 <template>
@@ -56,7 +63,7 @@ function removeMessage(i) {
         <div class="card-body">
             <form>
                 <div class="mb-3">
-                    <label for="sigBundleText" class="form-label">Signature Bundle JSON</label>
+                    <label for="sigBundleText" class="form-label">Signature Bundle JSON</label><button type="button" class="btn btn-outline-secondary btn-small" @click="useLocalSig">Use above signature</button>
                     <textarea class="form-control" v-model="sigBundleString" id="sigBundleText" rows="3"></textarea>
                     <button type="button" class="btn btn-primary" @click="processBundleText">Process JSON</button>
                 </div>

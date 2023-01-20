@@ -2,23 +2,15 @@
 import { ref} from 'vue';
 import { proofVerify, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from './BBSAllinOne.js';
 
+const props = defineProps(['proofBundleString']);
+
 let proofBundleText = ref("");
 let proofBundle = ref({});
 let verifiedText = ref("?");
 
 
 async function verifyProof() {
-    // TODO: convert to verify
     console.log("Verify Proof called");
-            // let proofBundle = {
-        //     pk: bytesToHex(pk_bytes),
-        //     header: bytesToHex(headerBytes),
-        //     ph: bytesToHex(ph),
-        //     disclosedIndexes: disclosed.value,
-        //     disclosedMsgs: disclosedMsgs,
-        //     totalMsgs: messages.length,
-        //     proof: bytesToHex(result)
-        // }
     try {
         // Need to convert messages to octets!
         let te = new TextEncoder();
@@ -50,6 +42,11 @@ function processProofBundleText() {
     verifiedText.value = "?";
 }
 
+function useLocalProof() {
+    proofBundleText.value = props.proofBundleString;
+    processProofBundleText();
+}
+
 
 </script>
 
@@ -63,6 +60,7 @@ function processProofBundleText() {
             <form>
                 <div class="mb-3">
                     <label for="sigBundleText" class="form-label">Proof Bundle JSON</label>
+                    <button type="button" class="btn btn-outline-secondary btn-small" @click="useLocalProof">Use above proof</button>
                     <textarea class="form-control" v-model="proofBundleText" id="sigBundleText" rows="3"></textarea>
                     <button type="button" class="btn btn-primary" @click="processProofBundleText">Process JSON</button>
                 </div>

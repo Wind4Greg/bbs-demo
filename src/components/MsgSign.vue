@@ -3,6 +3,7 @@ import { ref} from 'vue';
 import { sign, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from './BBSAllinOne.js';
 
 const props = defineProps(['keys'])
+const emit = defineEmits(['signature']);
 
 let messages = ref(["University of Nowhere Fall 2020", "Physics 137A: A", "Guitar 101: B", "Dance Elementary: D"]);
 let header = ref("11223344556677889900aabbccddeeff");
@@ -37,6 +38,8 @@ async function createSig() {
             signature: signature.value
         }
         console.log(`Finished signature computation: ${signature.value}`);
+        let bundleString = JSON.stringify(signatureBundle.value, null, 2);
+        emit("signature", bundleString);
     } catch (error) {
         console.log(`Problem with signature ${error}`);
     }
@@ -73,7 +76,7 @@ function copySig() {
             <div>
                 <h3>Signature</h3>
                 <p>{{ signature }}</p>
-                <h4>Signature Bundle <button type="button" class="btn btn-small" @click="copySig">Copy to Clipboard</button></h4>
+                <h4>Signature Bundle <button type="button" class="btn btn-outline-secondary btn-small" @click="copySig">Copy to Clipboard</button></h4>
                 <div>{{ JSON.stringify(signatureBundle, null, 2) }}</div>
 
             </div>

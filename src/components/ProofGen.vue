@@ -2,6 +2,9 @@
 import { ref} from 'vue';
 import { proofGen, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from './BBSAllinOne.js';
 
+const props = defineProps(['sigBundle']);
+const emit = defineEmits(['proof']);
+
 let sigBundleString = ref("");
 let sigBundle = ref({});
 let disclosed = ref([]);
@@ -33,7 +36,7 @@ async function genProof() {
             proof: bytesToHex(result)
         }
         proofBundleText.value = JSON.stringify(proofBundle, null, 2);
-
+        emit("proof", proofBundleText.value);
     } catch (error) {
         console.log(`Problem with signature ${error}`);
     }
@@ -67,6 +70,11 @@ function copyProof() {
     navigator.clipboard.writeText(proofBundleText.value);
 }
 
+function useLocalSig() {
+    sigBundleString.value = props.sigBundle;
+    processSigBundleText();
+}
+
 </script>
 
 <template>
@@ -79,6 +87,7 @@ function copyProof() {
             <form>
                 <div class="mb-3">
                     <label for="sigBundleText" class="form-label">Signature Bundle JSON</label>
+                    <button type="button" class="btn btn-outline-secondary btn-small" @click="useLocalSig">Use above signature</button>
                     <textarea class="form-control" v-model="sigBundleString" id="sigBundleText" rows="3"></textarea>
                     <button type="button" class="btn btn-primary" @click="processSigBundleText">Process JSON</button>
                 </div>
