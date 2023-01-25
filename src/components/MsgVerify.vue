@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { verify, messages_to_scalars, prepareGenerators, os2ip, hexToBytes, bytesToHex } from './BBSAllinOne.js';
+import { verify, messages_to_scalars, prepareGenerators, os2ip, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
 
 const props = defineProps(['sigBundle']);
 

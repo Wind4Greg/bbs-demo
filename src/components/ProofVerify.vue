@@ -1,6 +1,6 @@
 <script setup>
 import { ref} from 'vue';
-import { proofVerify, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from './BBSAllinOne.js';
+import { proofVerify, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
 
 const props = defineProps(['proofBundleString']);
 

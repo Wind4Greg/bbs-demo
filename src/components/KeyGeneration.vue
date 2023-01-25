@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { os2ip, hexToBytes, bytesToHex } from './BBSAllinOne.js';
+import { os2ip, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
 import * as bls from '@noble/bls12-381';
 
 const emit = defineEmits(['keys']);

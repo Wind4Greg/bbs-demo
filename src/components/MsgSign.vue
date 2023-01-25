@@ -1,6 +1,6 @@
 <script setup>
 import { ref} from 'vue';
-import { sign, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from './BBSAllinOne.js';
+import { sign, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
 
 const props = defineProps(['keys'])
 const emit = defineEmits(['signature']);
