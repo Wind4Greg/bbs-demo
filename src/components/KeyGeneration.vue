@@ -44,7 +44,7 @@ function generateRandomSecret() {
 
 <template>
   <div class="card">
-    <div class="card-header greg">
+    <div class="card-header space-between">
       <h4>Key Generation</h4><button type="button" class="btn text-nowrap"><IconInfo/></button>
     </div>
 

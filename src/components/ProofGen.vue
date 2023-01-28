@@ -1,6 +1,7 @@
 <script setup>
-import { ref} from 'vue';
+import { ref } from 'vue';
 import { proofGen, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
+import IconInfo from './icons/IconInfo.vue';
 
 const props = defineProps(['sigBundle']);
 const emit = defineEmits(['proof']);
@@ -9,6 +10,7 @@ let sigBundleString = ref("");
 let sigBundle = ref({});
 let disclosed = ref([]);
 let proofBundleText = ref("");
+let proofHex = ref("");
 
 
 async function genProof() {
@@ -26,6 +28,7 @@ async function genProof() {
         let ph = new Uint8Array(); // Empty proof header for now
         let result = await proofGen(pk_bytes, signature, headerBytes, ph, msg_scalars, disclosed.value, gens);
         let disclosedMsgs = messages.filter((msg, i) => disclosed.value.includes(i));
+        proofHex.value = bytesToHex(result);
         let proofBundle = {
             pk: bytesToHex(pk_bytes),
             header: bytesToHex(headerBytes),
@@ -79,47 +82,53 @@ function useLocalSig() {
 
 <template>
     <div class="card">
-        <div class="card-header">
-            Proof Generation
+        <div class="card-header space-between">
+            <h4>Proof Generation</h4><button type="button" class="btn text-nowrap">
+                <IconInfo />
+            </button>
         </div>
 
         <div class="card-body">
             <form>
                 <div class="mb-3">
-                    <label for="sigBundleText" class="form-label">Signature Bundle JSON</label>
-                    <button type="button" class="btn btn-outline-secondary btn-small" @click="useLocalSig">Use above signature</button>
-                    <textarea class="form-control" v-model="sigBundleString" id="sigBundleText" rows="3"></textarea>
+                    <div class="space-between mb-1">
+                        <label for="sigBundleText" class="form-label">Signature Bundle JSON</label>
+                        <button type="button" class="btn btn-outline-secondary btn-small" @click="useLocalSig">Use above
+                            signature</button>
+                    </div>
+                    <textarea class="form-control mb-1" v-model="sigBundleString" id="sigBundleText" rows="3"></textarea>
                     <button type="button" class="btn btn-primary" @click="processSigBundleText">Process JSON</button>
                 </div>
             </form>
             <form class="mb-3">
-                <div class="mb-3">
-                    <label for="sigHeader" class="form-label">Signature Header Hex</label>
-                    <input type="text" class="form-control" id="sigHeader" v-model="sigBundle.header">
-                </div>
                 <fieldset>
-                    <legend>Messages:</legend>
+                    <legend>Messages (select to include):</legend>
                     <div v-for="(msg, index) in sigBundle.messages" class="mb-3 input-group">
                         <input type="text" class="form-control" :placeholder="msg" v-model="sigBundle.messages[index]">
                         <span class="input-group-text">
                             <input class="form-check-input" type="checkbox" @change="disclosedCheck(index)">
                         </span>
                     </div>
-                    <button type="button" class="btn btn-primary" @click="addMessage">Add Message</button>
                 </fieldset>
-            </form>
-            <div id="ProofSection">
                 <button type="button" class="btn btn-secondary" @click="genProof">Generate Proof</button>
-                <h3>Proof <button type="button" class="btn btn-small" @click="copyProof">Copy to Clipboard</button></h3>
-                <div class="mb-3">
-                    <textarea class="form-control" v-model="proofBundleText" readonly rows="3"></textarea>
+            </form>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h3>Proof</h3>
+                    <textarea class="form-control" readonly>{{ proofHex }}</textarea>
+                    <div class="space-between my-2">
+                        <h4>Proof Bundle</h4> <button type="button" class="btn btn-outline-secondary btn-small"
+                            @click="copyProof">Copy to Clipboard</button>
+                    </div>
+                    <textarea class="form-control" readonly>{{ proofBundleText }}</textarea>
                 </div>
             </div>
-
 
 
         </div>
     </div>
 </template>
 <style scoped>
+
 </style>

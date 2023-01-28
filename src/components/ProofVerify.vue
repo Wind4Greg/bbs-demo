@@ -1,6 +1,7 @@
 <script setup>
-import { ref} from 'vue';
+import { ref } from 'vue';
 import { proofVerify, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
+import IconInfo from './icons/IconInfo.vue';
 
 const props = defineProps(['proofBundleString']);
 
@@ -23,7 +24,7 @@ async function verifyProof() {
         let pk_bytes = hexToBytes(proofBundle.value.pk);
         let proof = hexToBytes(proofBundle.value.proof);
         let ph = hexToBytes(proofBundle.value.ph); // Empty proof header for now
-        let result = await proofVerify(pk_bytes, proof, L, headerBytes, ph, disclosedMsgScalars, 
+        let result = await proofVerify(pk_bytes, proof, L, headerBytes, ph, disclosedMsgScalars,
             proofBundle.value.disclosedIndexes, gens);
         verifiedText.value = result.toString();
 
@@ -52,16 +53,22 @@ function useLocalProof() {
 
 <template>
     <div class="card">
-        <div class="card-header">
-            Proof Verification
+        <div class="card-header space-between">
+            <h4>Proof Verification</h4><button type="button" class="btn text-nowrap">
+                <IconInfo />
+            </button>
         </div>
 
         <div class="card-body">
             <form>
                 <div class="mb-3">
-                    <label for="sigBundleText" class="form-label">Proof Bundle JSON</label>
-                    <button type="button" class="btn btn-outline-secondary btn-small" @click="useLocalProof">Use above proof</button>
-                    <textarea class="form-control" v-model="proofBundleText" id="sigBundleText" rows="3"></textarea>
+                    <div class="space-between mb-1">
+                        <label for="sigBundleText" class="form-label">Proof Bundle JSON</label>
+                        <button type="button" class="btn btn-outline-secondary btn-small" @click="useLocalProof">Use
+                            above
+                            proof</button>
+                    </div>
+                    <textarea class="form-control mb-1" v-model="proofBundleText" id="sigBundleText" rows="3"></textarea>
                     <button type="button" class="btn btn-primary" @click="processProofBundleText">Process JSON</button>
                 </div>
             </form>
@@ -74,4 +81,11 @@ function useLocalProof() {
     </div>
 </template>
 <style scoped>
+#VerifySection {
+    display: flex
+}
+
+#VerifySection button {
+    margin-right: 1em
+}
 </style>

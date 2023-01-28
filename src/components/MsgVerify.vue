@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { verify, messages_to_scalars, prepareGenerators, os2ip, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
+import IconInfo from './icons/IconInfo.vue';
 
 const props = defineProps(['sigBundle']);
 
@@ -56,33 +57,50 @@ function useLocalSig() {
 
 <template>
     <div class="card">
-        <div class="card-header">
-            Message Signature Verification
+        <div class="card-header space-between">
+            <h4>Signature Bundle Verification</h4><button type="button" class="btn text-nowrap">
+                <IconInfo />
+            </button>
         </div>
 
         <div class="card-body">
             <form>
                 <div class="mb-3">
-                    <label for="sigBundleText" class="form-label">Signature Bundle JSON</label><button type="button" class="btn btn-outline-secondary btn-small" @click="useLocalSig">Use above signature</button>
-                    <textarea class="form-control" v-model="sigBundleString" id="sigBundleText" rows="3"></textarea>
+                    <div class="space-between mb-1">
+                        <label for="sigBundleText" class="form-label">Signature Bundle JSON</label><button type="button"
+                            class="btn btn-outline-secondary btn-small" @click="useLocalSig">Use above
+                            signature</button>
+                    </div>
+                    <textarea class="form-control mb-1" v-model="sigBundleString" id="sigBundleText"
+                        rows="3"></textarea>
                     <button type="button" class="btn btn-primary" @click="processBundleText">Process JSON</button>
                 </div>
             </form>
-            <form class="mb-3">
-                <div class="mb-3">
-                    <label for="sigHeader" class="form-label">Signature Header Hex</label>
-                    <input type="text" class="form-control" id="sigHeader" v-model="sigBundle.header">
-                </div>
-                <fieldset>
-                    <legend>Messages:</legend>
-                    <div v-for="(msg, index) in sigBundle.messages" class="mb-3 input-group">
-                        <input type="text" class="form-control" :placeholder="msg" v-model="sigBundle.messages[index]">
-                        <button class="btn btn-outline-secondary" @click="removeMessage(index)"
-                            type="button">Remove</button>
+
+            <details class="mb-2">
+                <summary>Modify Signature Bundle</summary>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Changing any field invalidates the signature</h5>
+                        <form class="mb-3">
+                            <div class="mb-3">
+                                <label for="sigHeader" class="form-label">Signature Header Hex</label>
+                                <input type="text" class="form-control" id="sigHeader" v-model="sigBundle.header">
+                            </div>
+                            <fieldset>
+                                <legend>Messages:</legend>
+                                <div v-for="(msg, index) in sigBundle.messages" class="mb-3 input-group">
+                                    <input type="text" class="form-control" :placeholder="msg"
+                                        v-model="sigBundle.messages[index]">
+                                    <button class="btn btn-outline-secondary" @click="removeMessage(index)"
+                                        type="button">Remove</button>
+                                </div>
+                                <button type="button" class="btn btn-primary" @click="addMessage">Add Message</button>
+                            </fieldset>
+                        </form>
                     </div>
-                    <button type="button" class="btn btn-primary" @click="addMessage">Add Message</button>
-                </fieldset>
-            </form>
+                </div>
+            </details>
             <div id="VerifySection">
                 <button type="button" class="btn btn-secondary" @click="verifySig">Verify Signature</button>
                 <h3>Verified: {{ verifiedText }}</h3>
@@ -94,6 +112,11 @@ function useLocalSig() {
     </div>
 </template>
 <style scoped>
-    #VerifySection {display: flex}
-    #VerifySection button {margin-right: 1em}
+#VerifySection {
+    display: flex
+}
+
+#VerifySection button {
+    margin-right: 1em
+}
 </style>

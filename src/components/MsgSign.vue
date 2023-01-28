@@ -1,6 +1,7 @@
 <script setup>
-import { ref} from 'vue';
+import { ref } from 'vue';
 import { sign, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
+import IconInfo from './icons/IconInfo.vue';
 
 const props = defineProps(['keys'])
 const emit = defineEmits(['signature']);
@@ -32,7 +33,8 @@ async function createSig() {
         let result = await sign(props.keys.secretScalar, props.keys.publicBytes, headerBytes,
             msg_scalars, gens);
         signature.value = bytesToHex(result);
-        signatureBundle.value = { publicKey: bytesToHex(props.keys.publicBytes),
+        signatureBundle.value = {
+            publicKey: bytesToHex(props.keys.publicBytes),
             header: header.value,
             messages: messages.value,
             signature: signature.value
@@ -52,8 +54,10 @@ function copySig() {
 
 <template>
     <div class="card">
-        <div class="card-header">
-            Message Signing
+        <div class="card-header space-between">
+            <h4>Signature Creation</h4><button type="button" class="btn text-nowrap">
+                <IconInfo />
+            </button>
         </div>
 
         <div class="card-body">
@@ -69,16 +73,23 @@ function copySig() {
                         <button class="btn btn-outline-secondary" @click="removeMessage(index)"
                             type="button">Remove</button>
                     </div>
-                    <button type="button" class="btn btn-primary" @click="addMessage">Add Message</button>
-                </fieldset>
-                <button type="button" class="btn btn-primary" @click="createSig">Create Signature</button>
-            </form>
-            <div>
-                <h3>Signature</h3>
-                <textarea class="form-control" readonly >{{ signature }}</textarea>
-                <h4>Signature Bundle <button type="button" class="btn btn-outline-secondary btn-small" @click="copySig">Copy to Clipboard</button></h4>
-                <textarea class="form-control" readonly >{{ JSON.stringify(signatureBundle, null, 2) }}</textarea>
 
+                </fieldset>
+                <div class="space-between mb-3">
+                    <button type="button" class="btn btn-secondary" @click="addMessage">Add Message</button>
+                    <button type="button" class="btn btn-primary" @click="createSig">Create Signature</button>
+                </div>
+            </form>
+            <div class="card">
+                <div class="card-body">
+                    <h3>Signature</h3>
+                    <textarea class="form-control" readonly>{{ signature }}</textarea>
+                    <div class="space-between my-2">
+                        <h4>Signature Bundle</h4> <button type="button" class="btn btn-outline-secondary btn-small"
+                            @click="copySig">Copy to Clipboard</button>
+                    </div>
+                    <textarea class="form-control" readonly>{{ JSON.stringify(signatureBundle, null, 2) }}</textarea>
+                </div>
             </div>
 
         </div>

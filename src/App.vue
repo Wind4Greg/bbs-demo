@@ -48,7 +48,7 @@ function proofUpdate(proofText) {
 </template>
 
 <style>
-.card-header.greg {
+.space-between {
   display: flex;
   justify-content: space-between;
 }
