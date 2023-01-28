@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import { ref } from "vue";
 import KeyGeneration from './components/KeyGeneration.vue';
 import MsgSign from './components/MsgSign.vue';
 import MsgVerify from "./components/MsgVerify.vue";
@@ -27,13 +27,29 @@ function proofUpdate(proofText) {
 <template>
   <main>
     <h1>BBS Signature Demo</h1>
-    <KeyGeneration @keys="keyUpdate"/>
-    <MsgSign :keys="keys" @signature="sigUpdate"/>
-    <MsgVerify :sigBundle="sigBundle"/>
-    <ProofGen :sigBundle="sigBundle" @proof="proofUpdate" />
-    <ProofVerify :proofBundleString="proofBundleText" />
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <div class="col">
+        <KeyGeneration @keys="keyUpdate" />
+      </div>
+      <div class="col">
+        <MsgSign class="col" :keys="keys" @signature="sigUpdate" />
+      </div>
+      <div class="col">
+        <MsgVerify :sigBundle="sigBundle" />
+      </div>
+      <div class="col">
+        <ProofGen :sigBundle="sigBundle" @proof="proofUpdate" />
+      </div>
+      <div class="col">
+        <ProofVerify :proofBundleString="proofBundleText" />
+      </div>
+    </div>
   </main>
 </template>
 
-<style scoped>
+<style>
+.card-header.greg {
+  display: flex;
+  justify-content: space-between;
+}
 </style>

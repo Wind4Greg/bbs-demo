@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import { os2ip, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
 import * as bls from '@noble/bls12-381';
+import IconInfo from './icons/IconInfo.vue';
 
 const emit = defineEmits(['keys']);
 
@@ -43,18 +44,18 @@ function generateRandomSecret() {
 
 <template>
   <div class="card">
-    <div class="card-header">
-      Key Generation
+    <div class="card-header greg">
+      <h4>Key Generation</h4><button type="button" class="btn text-nowrap"><IconInfo/></button>
     </div>
 
     <div class="card-body">
       <form>
         <p>Private Key in Hex <button type="button" class="btn btn-primary btn-sm" @click="generateRandomSecret">Generate Random Key</button></p>
         <input type="text" class="form-control" v-model="secretKeyHex" />
-        
-        <p>Private Key as Scalar: {{ validSecretHex? os2ip(hexToBytes(secretKeyHex)) : "" }}</p>
+        <p>Private Key as Scalar:</p>
+        <textarea class="form-control" readonly >{{ validSecretHex? os2ip(hexToBytes(secretKeyHex)) : "" }}</textarea>
         <p>Public Key in Hex</p>
-        <p>{{ bytesToHex(pk_bytes) }}</p>
+        <textarea class="form-control" readonly >{{ bytesToHex(pk_bytes) }}</textarea>
       </form>
 
     </div>

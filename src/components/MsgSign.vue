@@ -75,9 +75,9 @@ function copySig() {
             </form>
             <div>
                 <h3>Signature</h3>
-                <p>{{ signature }}</p>
+                <textarea class="form-control" readonly >{{ signature }}</textarea>
                 <h4>Signature Bundle <button type="button" class="btn btn-outline-secondary btn-small" @click="copySig">Copy to Clipboard</button></h4>
-                <div>{{ JSON.stringify(signatureBundle, null, 2) }}</div>
+                <textarea class="form-control" readonly >{{ JSON.stringify(signatureBundle, null, 2) }}</textarea>
 
             </div>
 

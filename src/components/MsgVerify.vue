@@ -57,7 +57,7 @@ function useLocalSig() {
 <template>
     <div class="card">
         <div class="card-header">
-            Message Verification
+            Message Signature Verification
         </div>
 
         <div class="card-body">
