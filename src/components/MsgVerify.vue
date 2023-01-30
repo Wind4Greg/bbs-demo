@@ -58,7 +58,8 @@ function useLocalSig() {
 <template>
     <div class="card">
         <div class="card-header space-between">
-            <h4>Signature Bundle Verification</h4><button type="button" class="btn text-nowrap">
+            <h4>Signature Bundle Verification</h4><button type="button" class="btn text-nowrap" data-bs-toggle="modal"
+                data-bs-target="#sigVerifyModal">
                 <IconInfo />
             </button>
         </div>
@@ -108,6 +109,20 @@ function useLocalSig() {
 
 
 
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="sigVerifyModal" tabindex="-1" aria-labelledby="sigVerifyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="sigVerifyModalLabel">Signature Verification</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+            </div>
         </div>
     </div>
 </template>

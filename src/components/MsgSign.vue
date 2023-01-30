@@ -55,7 +55,8 @@ function copySig() {
 <template>
     <div class="card">
         <div class="card-header space-between">
-            <h4>Signature Creation</h4><button type="button" class="btn text-nowrap">
+            <h4>Signature Creation</h4><button type="button" class="btn text-nowrap" data-bs-toggle="modal"
+                data-bs-target="#sigCreateModal">
                 <IconInfo />
             </button>
         </div>
@@ -92,6 +93,20 @@ function copySig() {
                 </div>
             </div>
 
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="sigCreateModal" tabindex="-1" aria-labelledby="sigCreateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="sigCreateModalLabel">Signature Creation Info</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+            </div>
         </div>
     </div>
 </template>

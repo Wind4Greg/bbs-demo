@@ -5,6 +5,8 @@ import MsgSign from './components/MsgSign.vue';
 import MsgVerify from "./components/MsgVerify.vue";
 import ProofGen from "./components/ProofGen.vue";
 import ProofVerify from "./components/ProofVerify.vue";
+import IconInfo from './components/icons/IconInfo.vue';
+import {Modal} from 'bootstrap';
 
 let keys = ref({});
 let sigBundle = ref("");
@@ -26,7 +28,10 @@ function proofUpdate(proofText) {
 
 <template>
   <main>
-    <h1>BBS Signature Demo</h1>
+    <h1>BBS Signature Demo <button type="button" class="btn text-nowrap" data-bs-toggle="modal"
+        data-bs-target="#appInfoModal">
+        <IconInfo />
+      </button></h1>
     <div class="row row-cols-1 row-cols-md-2 g-4">
       <div class="col">
         <KeyGeneration @keys="keyUpdate" />
@@ -45,6 +50,22 @@ function proofUpdate(proofText) {
       </div>
     </div>
   </main>
+
+  <!-- Modal -->
+  <div class="modal fade" id="appInfoModal" tabindex="-1" aria-labelledby="appInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="appInfoModalLabel">About BBS Signatures</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <style>

@@ -54,7 +54,8 @@ function useLocalProof() {
 <template>
     <div class="card">
         <div class="card-header space-between">
-            <h4>Proof Verification</h4><button type="button" class="btn text-nowrap">
+            <h4>Proof Verification</h4><button type="button" class="btn text-nowrap" data-bs-toggle="modal"
+                data-bs-target="#proofVerifyModal">
                 <IconInfo />
             </button>
         </div>
@@ -76,6 +77,20 @@ function useLocalProof() {
             <div id="VerifySection">
                 <button type="button" class="btn btn-secondary" @click="verifyProof">Verify Proof</button>
                 <h3>Verified = {{ verifiedText }}</h3>
+            </div>
+        </div>
+    </div>
+        <!-- Modal -->
+        <div class="modal fade" id="proofVerifyModal" tabindex="-1" aria-labelledby="proofVerifyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="proofVerifyModalLabel">Proof Verification</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
             </div>
         </div>
     </div>

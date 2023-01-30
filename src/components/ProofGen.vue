@@ -83,7 +83,8 @@ function useLocalSig() {
 <template>
     <div class="card">
         <div class="card-header space-between">
-            <h4>Proof Generation</h4><button type="button" class="btn text-nowrap">
+            <h4>Proof Generation</h4><button type="button" class="btn text-nowrap" data-bs-toggle="modal"
+                data-bs-target="#proofGenModal">
                 <IconInfo />
             </button>
         </div>
@@ -124,8 +125,20 @@ function useLocalSig() {
                     <textarea class="form-control" readonly>{{ proofBundleText }}</textarea>
                 </div>
             </div>
-
-
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="proofGenModal" tabindex="-1" aria-labelledby="proofGenModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="proofGenModalLabel">Proof Generation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+            </div>
         </div>
     </div>
 </template>

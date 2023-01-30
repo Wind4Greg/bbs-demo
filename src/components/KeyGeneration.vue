@@ -28,7 +28,7 @@ let pk_bytes = computed(() => {
     console.log(secretKeyHex.value);
     let pointPk = bls.PointG2.fromPrivateKey(sk_bytes);
     let publicBytes = pointPk.toRawBytes(true);
-    emit("keys", {secretScalar: os2ip(sk_bytes), publicBytes: publicBytes})
+    emit("keys", { secretScalar: os2ip(sk_bytes), publicBytes: publicBytes })
     return publicBytes;
   } catch {
     return new Uint8Array();
@@ -45,19 +45,37 @@ function generateRandomSecret() {
 <template>
   <div class="card">
     <div class="card-header space-between">
-      <h4>Key Generation</h4><button type="button" class="btn text-nowrap"><IconInfo/></button>
+      <h4>Key Generation</h4><button type="button" class="btn text-nowrap" data-bs-toggle="modal"
+        data-bs-target="#keyGenModal">
+        <IconInfo />
+      </button>
     </div>
 
     <div class="card-body">
       <form>
-        <p>Private Key in Hex <button type="button" class="btn btn-primary btn-sm" @click="generateRandomSecret">Generate Random Key</button></p>
+        <p>Private Key in Hex <button type="button" class="btn btn-primary btn-sm"
+            @click="generateRandomSecret">Generate Random Key</button></p>
         <input type="text" class="form-control" v-model="secretKeyHex" />
         <p>Private Key as Scalar:</p>
-        <textarea class="form-control" readonly >{{ validSecretHex? os2ip(hexToBytes(secretKeyHex)) : "" }}</textarea>
+        <textarea class="form-control" readonly>{{ validSecretHex? os2ip(hexToBytes(secretKeyHex)) : "" }}</textarea>
         <p>Public Key in Hex</p>
-        <textarea class="form-control" readonly >{{ bytesToHex(pk_bytes) }}</textarea>
+        <textarea class="form-control" readonly>{{ bytesToHex(pk_bytes) }}</textarea>
       </form>
 
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="keyGenModal" tabindex="-1" aria-labelledby="keyGenModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="keyGenModalLabel">Key Generation Info</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+      </div>
     </div>
   </div>
 </template>
