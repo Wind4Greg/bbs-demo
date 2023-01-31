@@ -6,6 +6,7 @@ import MsgVerify from "./components/MsgVerify.vue";
 import ProofGen from "./components/ProofGen.vue";
 import ProofVerify from "./components/ProofVerify.vue";
 import IconInfo from './components/icons/IconInfo.vue';
+import AppInfo from './components/info/AppInfo.vue'
 import {Modal} from 'bootstrap';
 
 let keys = ref({});
@@ -60,7 +61,7 @@ function proofUpdate(proofText) {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+          <AppInfo />
         </div>
       </div>
     </div>
