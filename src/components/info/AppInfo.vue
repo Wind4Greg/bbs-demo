@@ -1,7 +1,10 @@
 <script setup>
 </script>
 <template>
-    <p>This in browser application demonstrates BBS signatures.</p>
+    <p>This in browser application demonstrates the capabilities of BBS signatures, an advanced digital
+        signature scheme currently under standardization with proven cryptographic properties.
+        <strong>Not</strong> intended for any purposed other than algorithm demonstration!
+    </p>
     <p>There are several key sections to the application:</p>
     <ul>
         <li><strong>Key Generation</strong>: This is where the &quot;original&quot; signer of the &quot;document&quot;
@@ -24,4 +27,6 @@
         <li><strong>Proof</strong> Verification: This section of the application allows you to verify a proof. Note that
             if you tried to change a message in the <em>proof generation</em> step the proof will not validate.</li>
     </ul>
+    <p><strong>Questions or Comments</strong>? Email: <a
+            href="mailto:gregb@grotto-networking.com">gregb@grotto-networking.com</a></p>
 </template>
