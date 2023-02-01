@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { os2ip, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
 import * as bls from '@noble/bls12-381';
 import IconInfo from './icons/IconInfo.vue';
+import KeyGenInfo from './info/KeyGenInfo.vue';
 
 const emit = defineEmits(['keys']);
 
@@ -66,14 +67,14 @@ function generateRandomSecret() {
   </div>
   <!-- Modal -->
   <div class="modal fade" id="keyGenModal" tabindex="-1" aria-labelledby="keyGenModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="keyGenModalLabel">Key Generation Info</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          ...
+          <KeyGenInfo />
         </div>
       </div>
     </div>

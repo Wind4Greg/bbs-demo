@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { proofVerify, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
 import IconInfo from './icons/IconInfo.vue';
+import ProofVerifyInfo from './info/ProofVerifyInfo.vue';
 
 const props = defineProps(['proofBundleString']);
 
@@ -82,14 +83,14 @@ function useLocalProof() {
     </div>
         <!-- Modal -->
         <div class="modal fade" id="proofVerifyModal" tabindex="-1" aria-labelledby="proofVerifyModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="proofVerifyModalLabel">Proof Verification</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <ProofVerifyInfo />
                 </div>
             </div>
         </div>

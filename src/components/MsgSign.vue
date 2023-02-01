@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { sign, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
 import IconInfo from './icons/IconInfo.vue';
+import MsgSignInfo from './info/MsgSignInfo.vue';
 
 const props = defineProps(['keys'])
 const emit = defineEmits(['signature']);
@@ -97,14 +98,14 @@ function copySig() {
     </div>
     <!-- Modal -->
     <div class="modal fade" id="sigCreateModal" tabindex="-1" aria-labelledby="sigCreateModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="sigCreateModalLabel">Signature Creation Info</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <MsgSignInfo />
                 </div>
             </div>
         </div>

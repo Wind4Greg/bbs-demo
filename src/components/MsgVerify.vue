@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { verify, messages_to_scalars, prepareGenerators, os2ip, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
 import IconInfo from './icons/IconInfo.vue';
+import MsgVerifyInfo from './info/MsgVerifyInfo.vue';
 
 const props = defineProps(['sigBundle']);
 
@@ -113,14 +114,14 @@ function useLocalSig() {
     </div>
     <!-- Modal -->
     <div class="modal fade" id="sigVerifyModal" tabindex="-1" aria-labelledby="sigVerifyModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="sigVerifyModalLabel">Signature Verification</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <MsgVerifyInfo />
                 </div>
             </div>
         </div>

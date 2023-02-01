@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { proofGen, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
 import IconInfo from './icons/IconInfo.vue';
+import ProofGenInfo from './info/ProofGenInfo.vue';
 
 const props = defineProps(['sigBundle']);
 const emit = defineEmits(['proof']);
@@ -129,14 +130,14 @@ function useLocalSig() {
     </div>
     <!-- Modal -->
     <div class="modal fade" id="proofGenModal" tabindex="-1" aria-labelledby="proofGenModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="proofGenModalLabel">Proof Generation</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <ProofGenInfo />
                 </div>
             </div>
         </div>
