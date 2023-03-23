@@ -36,7 +36,6 @@ async function genProof() {
             ph: bytesToHex(ph),
             disclosedIndexes: disclosed.value,
             disclosedMsgs: disclosedMsgs,
-            totalMsgs: messages.length,
             proof: bytesToHex(result)
         }
         proofBundleText.value = JSON.stringify(proofBundle, null, 2);

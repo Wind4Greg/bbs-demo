@@ -6,6 +6,9 @@ I'm trying this approach [installing local module with npm](https://stackoverflo
 
 `npm link ../BBSLibrary`
 
+After not working on this for a while I used `npm unlink @grottonetworking/bbs-signatures` then `npm link @grottonetworking/bbs-signatures` to get things to update. I also ran `npm link` in the main directory of the BBS library project.
+
+
 Note that it was important to add the line `"exports": "./lib/BBS.js"` to the `package.json` file of the BBS library that I'm developing. This allowed Vite to find it. See [article](https://stackoverflow.com/questions/68572936/what-is-the-difference-between-main-and-module-vs-exports-in-package-json)and they reference [node.js: package entry points](https://nodejs.org/api/packages.html#package-entry-points).
 
 ## Recommended IDE Setup

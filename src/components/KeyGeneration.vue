@@ -1,16 +1,12 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { os2ip, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
-import * as bls from '@noble/bls12-381';
+import { os2ip, hexToBytes, bytesToHex, publicFromPrivate, keyGen } from '@grottonetworking/bbs-signatures';
 import IconInfo from './icons/IconInfo.vue';
 import KeyGenInfo from './info/KeyGenInfo.vue';
 
 const emit = defineEmits(['keys']);
 
 let secretKeyHex = ref("47d2ede63ab4c329092b342ab526b1079dbc2595897d4f2ab2de4d841cbe7d56");
-// let sk_bytes = hexToBytes(secretKeyHex.value);
-// let pointPk = bls.PointG2.fromPrivateKey(sk_bytes);
-// let pk_bytes = pointPk.toRawBytes(true);
 let validSecretHex = computed(() => {
   if (secretKeyHex.value.length !== 64) {
     return false;
@@ -27,8 +23,7 @@ let pk_bytes = computed(() => {
   try {
     let sk_bytes = hexToBytes(secretKeyHex.value);
     console.log(secretKeyHex.value);
-    let pointPk = bls.PointG2.fromPrivateKey(sk_bytes);
-    let publicBytes = pointPk.toRawBytes(true);
+    let publicBytes = publicFromPrivate(sk_bytes);
     emit("keys", { secretScalar: os2ip(sk_bytes), publicBytes: publicBytes })
     return publicBytes;
   } catch {
@@ -36,9 +31,11 @@ let pk_bytes = computed(() => {
   }
 })
 
-function generateRandomSecret() {
-  let keyBytes = window.crypto.getRandomValues(new Uint8Array(32));
-  secretKeyHex.value = bytesToHex(keyBytes);
+async function generateRandomSecret() {
+  let keyMaterial = window.crypto.getRandomValues(new Uint8Array(32));
+  const keyInfo = new TextEncoder().encode("BBS-Demo Key Generator");
+  let sk = await keyGen(keyMaterial, keyInfo);
+  secretKeyHex.value = bytesToHex(sk);
 }
 
 </script>

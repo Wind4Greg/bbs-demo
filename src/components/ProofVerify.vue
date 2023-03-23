@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { proofVerify, messages_to_scalars, prepareGenerators, hexToBytes, bytesToHex } from '@grottonetworking/bbs-signatures';
+import { proofVerify, messages_to_scalars, prepareGenerators, hexToBytes, numUndisclosed } from '@grottonetworking/bbs-signatures';
 import IconInfo from './icons/IconInfo.vue';
 import ProofVerifyInfo from './info/ProofVerifyInfo.vue';
 
@@ -19,13 +19,14 @@ async function verifyProof() {
         let disclosedMsgs = proofBundle.value.disclosedMsgs;
         let disclosedMsgsOctets = disclosedMsgs.map(msg => te.encode(msg));
         let disclosedMsgScalars = await messages_to_scalars(disclosedMsgsOctets);
-        let L = proofBundle.value.totalMsgs;
+        let proof = hexToBytes(proofBundle.value.proof);
+        let L = numUndisclosed(proof) + disclosedMsgScalars.length;
         let gens = await prepareGenerators(L); // Generate enough for all messages
         let headerBytes = hexToBytes(proofBundle.value.header);
         let pk_bytes = hexToBytes(proofBundle.value.pk);
-        let proof = hexToBytes(proofBundle.value.proof);
+    
         let ph = hexToBytes(proofBundle.value.ph); // Empty proof header for now
-        let result = await proofVerify(pk_bytes, proof, L, headerBytes, ph, disclosedMsgScalars,
+        let result = await proofVerify(pk_bytes, proof, headerBytes, ph, disclosedMsgScalars,
             proofBundle.value.disclosedIndexes, gens);
         verifiedText.value = result.toString();
 

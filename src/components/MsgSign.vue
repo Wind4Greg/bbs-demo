@@ -7,7 +7,15 @@ import MsgSignInfo from './info/MsgSignInfo.vue';
 const props = defineProps(['keys'])
 const emit = defineEmits(['signature']);
 
-let messages = ref(["University of Nowhere Fall 2020", "Physics 137A: A", "Guitar 101: B", "Dance Elementary: D"]);
+let messages = ref(["FirstName: Sequoia",
+    "LastName: Sempervirens",
+    "Address: Jedediah Smith Redwoods State Park, California",
+    "Date of Birth: 1200/03/21",
+    "Height: 296 feet",
+    "Eyes: None",
+    "Hair: Brown bark, green needles",
+    "Picture: Encoded photo",
+    "License Class: None, Trees can't drive" ]);
 let header = ref("11223344556677889900aabbccddeeff");
 let signature = ref("");
 let signatureBundle = ref({});
