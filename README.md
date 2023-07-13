@@ -1,8 +1,10 @@
 # bbs-demo
 
-This template should help get you started developing with Vue 3 in Vite.
+I'm using Vue 3 in Vite.
 
-I'm trying this approach [installing local module with npm](https://stackoverflow.com/questions/8088795/installing-a-local-module-using-npm) to link in my BBS signature library, in particular use the command:
+Now installing my BBS signature library from NPM, i.e., `npm install --save @grottonetworking/bbs-signatures`.
+
+Prior to this I was using this approach [installing local module with npm](https://stackoverflow.com/questions/8088795/installing-a-local-module-using-npm) to link in my BBS signature library, in particular use the command:
 
 `npm link ../BBSLibrary`
 
